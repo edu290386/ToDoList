@@ -38,7 +38,7 @@ const checkTask = (task) => {
 
 
 const renderTask = (tasks) => {
-    containerTask.innerHTML = "";
+    containerTask.innerHTML = ""; 
     console.log(listTask);
     tasks.forEach((task, index) => { 
         containerTask.innerHTML += `
@@ -51,18 +51,21 @@ const renderTask = (tasks) => {
                     <button class="check-button" onclick=checkTask(${index})>
                         <img src="./assets/icons/check-fill.png" alt="">
                     </button>
-                    <button id="edit-button ${index}">
-                        <img src="./assets/icons/pencil-line.png" alt="">
-                    </button>
-                </div>
-                <div>
-                    <button id="save-button ${index}">
-                        <img src="./assets/icons/save-line.png" alt="">
-                    </button>
                     <button class="delete-button" onclick=deleteTask(${index})>
                         <img src="./assets/icons/delete-bin-line.png" alt="">
                     </button>
+                    
                 </div>
+                ${(!task.status) ? ` 
+                    <div>
+                        <button id="edit-button ${index}">
+                            <img src="./assets/icons/pencil-line.png" alt="">
+                        </button>
+                        <button id="save-button ${index}">
+                            <img src="./assets/icons/save-line.png" alt="">
+                        </button>
+                    </div>`
+                : ''}
             </div>        
         </div>`;
     });

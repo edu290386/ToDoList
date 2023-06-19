@@ -113,11 +113,3 @@ button{
     font-weight: bold;
 
 }
-
-
-
-@media (min-width: 768px){
-    .options{
-        margin: 0px; 
-    }
-}
