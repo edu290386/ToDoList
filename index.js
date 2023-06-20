@@ -1,5 +1,5 @@
 const containerTask = document.querySelector('.container-task');
-const buttonAddTask = document.querySelector('.button-add');
+let buttonAddTask = document.querySelector('.button-add');
 const inputTask = document.querySelector('.input-task');
 const deleteButton = document.querySelector('.delete-button');
 const checkButton = document.querySelector('.check-button');
@@ -14,6 +14,7 @@ inputTask.addEventListener('keyup', (event) => {
 });
 
 buttonAddTask.onclick = () => {
+    console.log("hola")
     if ( inputTask.value === "") return;
     createNewTask(inputTask.value);
     inputTask.value = '';
@@ -36,6 +37,22 @@ const checkTask = (task) => {
     renderTask(listTask)
 }
 
+const editTask = (task) => {
+    const editInput = document.querySelector(`#input-edit-${task}`);
+    const taskText = document.querySelector(`#task-text-${task}`);
+    editInput.style.display = 'block';
+    taskText.style.display = 'none';
+    editInput.placeholder = taskText.textContent;
+}
+
+
+const saveTask = (task) => {
+    const editInput = document.querySelector(`#input-edit-${task}`);
+    const taskText = document.querySelector(`#task-text-${task}`);
+    editInput.style.display = 'none';
+    taskText.textContent = editInput.value;
+    taskText.style.display = 'block';
+}
 
 const renderTask = (tasks) => {
     containerTask.innerHTML = ""; 
@@ -44,8 +61,8 @@ const renderTask = (tasks) => {
         containerTask.innerHTML += `
         ${(task.status) ? `<div id="task-${index}" class="task done">`
             : `<div id="task-${index}" class="task">`}
-            <div class="task-text">${task.task}
-            </div>
+            <div id="task-text-${index}" class="task-text">${task.task}</div>
+            <input id="input-edit-${index}" class="input-edit" type="text" placeholder="Ingrese nueva tarea">
             <div class="options ${index}">
                 <div>
                     <button class="check-button" onclick=checkTask(${index})>
@@ -58,10 +75,10 @@ const renderTask = (tasks) => {
                 </div>
                 ${(!task.status) ? ` 
                     <div>
-                        <button id="edit-button ${index}">
+                        <button class="edit-button" onclick=editTask(${index})>
                             <img src="./assets/icons/pencil-line.png" alt="">
                         </button>
-                        <button id="save-button ${index}">
+                        <button class="save-button" onclick=saveTask(${index})>
                             <img src="./assets/icons/save-line.png" alt="">
                         </button>
                     </div>`
@@ -70,4 +87,3 @@ const renderTask = (tasks) => {
         </div>`;
     });
 }
-
